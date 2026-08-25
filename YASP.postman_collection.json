@@ -7,10 +7,54 @@
   },
   "item": [
     {
-      "name": "Tests",
+      "name": "Auth",
       "item": [
         {
           "name": "CreateToken",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has token\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('token');\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Token is not empty\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.token).to.not.be.empty;\r",
+                  "});\r",
+                  "pm.test(\"Status code is 403 Forbidden\", function () {\r",
+                  "    pm.response.to.have.status(403);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Error message is correct\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.reason).to.eql(\"Bad credentials\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -43,9 +87,33 @@
             }
           },
           "response": []
-        },
+        }
+      ]
+    },
+    {
+      "name": "Booking",
+      "item": [
         {
           "name": "GetBookingIds",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Array is not empty\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.not.be.empty;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -66,6 +134,24 @@
         },
         {
           "name": "GetBooking",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -88,7 +174,7 @@
               }
             },
             "url": {
-              "raw": "https://restful-booker.herokuapp.com/booking/1896",
+              "raw": "https://restful-booker.herokuapp.com/booking/1",
               "protocol": "https",
               "host": [
                 "restful-booker",
@@ -97,7 +183,7 @@
               ],
               "path": [
                 "booking",
-                "1896"
+                "1"
               ]
             }
           },
@@ -105,6 +191,28 @@
         },
         {
           "name": "CreateBooking",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Response has id\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.have.property('bookingid');\r",
+                  "});\r",
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -145,12 +253,33 @@
         },
         {
           "name": "UpdateBooking",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "pm.test(\"Status code is 403\", function () {\r",
+                  "    pm.response.to.have.status(403);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "PUT",
             "header": [
               {
                 "key": "Cookie",
-                "value": "token=8dfe9187987072f",
+                "value": "token=601f7bc3a5bb55a",
                 "type": "text"
               },
               {
@@ -174,7 +303,7 @@
               }
             },
             "url": {
-              "raw": "https://restful-booker.herokuapp.com/booking/4600",
+              "raw": "https://restful-booker.herokuapp.com/booking/1",
               "protocol": "https",
               "host": [
                 "restful-booker",
@@ -183,7 +312,7 @@
               ],
               "path": [
                 "booking",
-                "4600"
+                "1"
               ]
             }
           },
@@ -191,12 +320,33 @@
         },
         {
           "name": "PartialUpdateBooking",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "pm.test(\"Status code is 403\", function () {\r",
+                  "    pm.response.to.have.status(403);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
-            "method": "PUT",
+            "method": "PATCH",
             "header": [
               {
                 "key": "Cookie",
-                "value": "token=05fa0199fbd3f00",
+                "value": "token=601f7bc3a5bb55a",
                 "type": "text"
               },
               {
@@ -220,7 +370,7 @@
               }
             },
             "url": {
-              "raw": "https://restful-booker.herokuapp.com/booking/46",
+              "raw": "https://restful-booker.herokuapp.com/booking/1",
               "protocol": "https",
               "host": [
                 "restful-booker",
@@ -229,7 +379,7 @@
               ],
               "path": [
                 "booking",
-                "46"
+                "1"
               ]
             }
           },
@@ -237,17 +387,41 @@
         },
         {
           "name": "DeleteBooking",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Status code is 403\", function () {\r",
+                  "    pm.response.to.have.status(403);\r",
+                  "});\r",
+                  "pm.test(\"Response has created\", function () {\r",
+                  "    pm.expect(pm.response.text()).to.include(\"Created\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "DELETE",
             "header": [
               {
                 "key": "Cookie",
-                "value": "token=05fc14b4f4b7ca8",
+                "value": "token=601f7bc3a5bb55a",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "https://restful-booker.herokuapp.com/booking/4081",
+              "raw": "https://restful-booker.herokuapp.com/booking/2",
               "protocol": "https",
               "host": [
                 "restful-booker",
@@ -256,14 +430,37 @@
               ],
               "path": [
                 "booking",
-                "4081"
+                "2"
               ]
             }
           },
           "response": []
-        },
+        }
+      ]
+    },
+    {
+      "name": "Ping",
+      "item": [
         {
           "name": "Ping HealthCheck",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Response has created\", function () {\r",
+                  "    pm.expect(pm.response.text()).to.include(\"Created\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
